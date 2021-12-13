@@ -17,24 +17,28 @@ class App extends Component {
   };
 
   fetchImages = (searchQuery, page) => {
-    // this.setState({ isLoaded: false });
-    fetch(
-      `https://pixabay.com/api/?&q=${searchQuery}&page=${page}&key=15898685-89bff7612e9c08763771f3be3&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then((d) => d.json())
-      .then((data) => {
-        this.state.page === 1
-          ? this.setState({
-              images: data.hits,
-              page: page + 1,
-              isLoaded: true,
-            })
-          : this.setState({
-              images: [...this.state.images, ...data.hits],
-              page: page + 1,
-              isLoaded: true,
-            });
-      });
+    try {
+      fetch(
+        `https://pixabay.com/api/?&q=${searchQuery}&page=${page}&key=15898685-89bff7612e9c08763771f3be3&image_type=photo&orientation=horizontal&per_page=12`
+      )
+        .then((data) => data.json())
+        .then((data) => {
+          this.state.page === 1
+            ? this.setState({
+                images: data.hits,
+                page: page + 1,
+                isLoaded: true,
+              })
+            : this.setState({
+                images: [...this.state.images, ...data.hits],
+                page: page + 1,
+                isLoaded: true,
+              });
+        })
+        .finally(() => this.setState({ isLoaded: true }));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   handleChange = (e) => {
