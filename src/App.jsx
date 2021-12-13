@@ -83,14 +83,19 @@ class App extends Component {
 
   render() {
     window.addEventListener("keydown", this.closeModalWithEsc);
-    const { isLoaded } = this.state;
-    if (!isLoaded) {
-      return (
-        <div>
-          <SearchBar
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
+
+    return (
+      <div>
+        <SearchBar
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
+        {this.state.isLoaded === true ? (
+          <ImageGallery
+            images={this.state.images}
+            openModalWindow={this.openModalWindow}
           />
+        ) : (
           <Loader
             className="wrapper"
             type="TailSpin"
@@ -98,38 +103,16 @@ class App extends Component {
             height={80}
             width={80}
           />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <SearchBar
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-          />
-          <ImageGallery
-            images={this.state.images}
-            openModalWindow={this.openModalWindow}
-          />
-          <Button loadMore={this.loadMore} />
-          {this.state.isModalOpen === true ? (
-            <Modal
-              closeModal={this.closeModal}
-              largeImg={this.state.largeImg}
-            />
-          ) : (
-            <></>
-          )}
-        </div>
-      );
-    }
+        )}
+        <Button loadMore={this.loadMore} />
+        {this.state.isModalOpen === true ? (
+          <Modal closeModal={this.closeModal} largeImg={this.state.largeImg} />
+        ) : (
+          <></>
+        )}
+      </div>
+    );
   }
 }
 
 export default App;
-
-// {/* <Modal
-// images={this.state.images}
-// currentId={this.state.currentId}
-// largeImg={this.state.largeImg}
-// /> */}
