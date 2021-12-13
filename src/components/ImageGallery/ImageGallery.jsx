@@ -4,10 +4,19 @@ import style from "./ImageGallery.module.css";
 
 class ImageGallery extends Component {
   render() {
-    const { images } = this.props;
+    const { images, openModalWindow } = this.props;
     return (
-      <ul className={style.ImageGallery}>
-        <ImageGalleryItem images={images} />
+      <ul className={style.ImageGallery} onClick={openModalWindow}>
+        <>
+          {images.map(({ id, webformatURL, largeImageURL }) => (
+            <ImageGalleryItem
+              key={id}
+              id={id}
+              webformatURL={webformatURL}
+              largeImageURL={largeImageURL}
+            />
+          ))}
+        </>
       </ul>
     );
   }

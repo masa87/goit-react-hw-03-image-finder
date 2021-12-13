@@ -6,9 +6,6 @@ const SearchBar = ({ handleChange, handleSubmit }) => {
     <header className={styles.Searchbar}>
       <form onSubmit={handleSubmit} className={styles.SearchForm}>
         <button type="submit" className={styles.SearchFormButton}>
-          {/* <svg class="formIcon">
-            <use xlink:href="./symbol-defs.svg#icon-search" />
-          </svg> */}
           <span className={styles.SearchFormButtonLabel}>Search</span>
         </button>
 
